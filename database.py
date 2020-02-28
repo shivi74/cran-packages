@@ -1,3 +1,5 @@
+# Connection and queries used to get and save package information in database
+
 import pymysql
 import re
 import logging

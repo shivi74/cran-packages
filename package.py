@@ -17,10 +17,13 @@ class IndexPackages:
 
     @staticmethod
     def _parse_package(package):
+        """Returns a list of debian package information."""
         pkg_generator = debian.deb822.Deb822.iter_paragraphs(package)
         return list(pkg_generator)[0]
 
     def _extract_package(self, package):
+        """Returns True when the description file downloaded and uncompressed
+        and False """
         filename = '%s_%s.tar.gz' % (package['Package'], package['Version'])
         response = requests.get(
             DESCRIPTION_TAR_URL + filename, allow_redirects=True)
@@ -34,6 +37,7 @@ class IndexPackages:
         return True
 
     def _save_package(self, package):
+        """Parse and save the package details in database."""
         if not self._extract_package(package):
             return False
         desc_filename = package['Package'] + '/DESCRIPTION'
@@ -66,6 +70,7 @@ class IndexPackages:
         return True
 
     def get_packages(self, limit=50):
+        """Fetch package list from CRAN and save in database."""
         response = requests.get(PACKAGE_URL)
         if response.status_code != 200:
             logging.error('Error: Fail to fetch packages')
