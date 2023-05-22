@@ -1,4 +1,4 @@
 python-debian==0.1.34
 python-crontab==2.4.0
 PyMySQL==0.9.3
-requests==2.23.0
+requests==2.31.0
